@@ -1,0 +1,24 @@
+{
+  "name": "recursive-command",
+  "version": "1.0.0",
+  "description": "Recursive command wrapper",
+  "main": "bin/cli.js",
+  "bin": {
+    "recursive-command": "./cli.js"
+  },
+  "author": "Fabio Gollinucci <fbgolly@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "consola": "^2.10.1",
+    "find": "^0.3.0",
+    "lodash": "^4.17.15",
+    "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.0"
+  },
+  "scripts": {
+    "lint": "eslint --fix ."
+  }
+}
