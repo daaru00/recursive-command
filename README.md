@@ -9,6 +9,12 @@ Install it globally to you system
 npm install -g recursive-command
 ```
 
+## Arguments
+
+`--find-file` File to find (**required**)
+
+`--parallel` Execute command in parallel (**optional**)
+
 ## Examples
 
 Execute `npm install` inside all NodeJS projects directories:
@@ -21,7 +27,7 @@ Execute `yarn install` inside all projects directories that use `yarn`:
 recursive-command --find-file='yarn.lock' --parallel yarn install
 ```
 
-Execute `serverless deploy` inside all Serverless Framework projects directories:
+Execute `serverless deploy` inside all Serverless Framework projects directories sequentially:
 ```
-recursive-command --find-file='serverless.yml' --parallel serverless deploy
+recursive-command --find-file='serverless.yml' serverless deploy
 ```
