@@ -12,6 +12,7 @@ if (fileToFind === undefined) {
 }
 const parallel = argv.parallel || false
 const directory = argv['find-in-directory'] || process.cwd()
+const limit = argv['find-limit'] || 10
 
 const originalCommand = process.argv.slice(2).join(' ')
   .replace(`--find-file=${fileToFind} `, '')
@@ -22,6 +23,10 @@ const originalCommand = process.argv.slice(2).join(' ')
   .replace(`--find-in-directory="${directory}" `, '')
   .replace(`--find-in-directory='${directory}' `, '')
   .replace(`--find-in-directory ${directory} `, '')
+  .replace(`--find-limit=${limit} `, '')
+  .replace(`--find-limit="${limit}" `, '')
+  .replace(`--find-limit='${limit}' `, '')
+  .replace(`--find-limit ${limit} `, '')
   .replace('--parallel ', '')
 
 const main = async () => {  
@@ -29,6 +34,11 @@ const main = async () => {
   const paths = await finder.findDirectories(fileToFind)
   if (paths.length === 0) {
     consola.error(`No file "${fileToFind}" found`)
+    return
+  }
+
+  if (parseInt(limit) !== -1 && paths.length > parseInt(limit)) {
+    consola.warn(`Too much files, limit is "${limit}", you can change it using --find-limit (to disable set -1).`)
     return
   }
   

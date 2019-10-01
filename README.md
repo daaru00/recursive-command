@@ -15,6 +15,8 @@ npm install -g recursive-command
 
 `--find-in-directory` File files into specific directory (**optional**, default: current working directory)
 
+`--limit` Raise and error when found files are more then limit, to disable it set to -1 (**optional**, default: 10)
+
 `--parallel` Execute command in parallel (**optional**, default: command are runned sequentially)
 
 ## Examples
