@@ -60,10 +60,9 @@ const main = async () => {
     }
   } catch (error) {
     consola.error('Execution error: ' + error.message)
-    if (ignoreErrors) {
-      return
+    if (ignoreErrors === false) {
+      process.exit(1)
     }
-    process.exit(1)
   }
 }
 
