@@ -11,6 +11,7 @@ if (fileToFind === undefined) {
   return
 }
 const parallel = argv.parallel || false
+const ignoreErrors = argv['ignore-errors'] || false
 const directory = argv['find-in-directory'] || process.cwd()
 const limit = argv['find-limit'] || 10
 
@@ -28,6 +29,12 @@ const originalCommand = process.argv.slice(2).join(' ')
   .replace(`--find-limit='${limit}' `, '')
   .replace(`--find-limit ${limit} `, '')
   .replace('--parallel ', '')
+  .replace('--ignore-errors ', '')
+
+if (originalCommand.trim() === '') {
+  consola.error('Required command parameters not found, ex: "<executable> <arguments> npm audit"')
+  return
+}
 
 const main = async () => {  
   const finder = new Finder(fileToFind, directory)
@@ -45,14 +52,18 @@ const main = async () => {
   const executor = new Executor()
   try {
     if (parallel) {
+      consola.info(`Executing "${originalCommand}" in parallel`)
       await executor.executeParallel(originalCommand, paths)
     } else {
-      await executor.executeSequentially(originalCommand, paths).catch((error) => {
-        consola.error('Execution error: ' + error.message)    
-      })
+      consola.info(`Executing "${originalCommand}" sequentially`)
+      await executor.executeSequentially(originalCommand, paths)
     }
   } catch (error) {
     consola.error('Execution error: ' + error.message)
+    if (ignoreErrors) {
+      return
+    }
+    process.exit(1)
   }
 }
 

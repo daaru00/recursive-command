@@ -19,14 +19,16 @@ npm install -g recursive-command
 
 `--parallel` Execute command in parallel (**optional**, default: command are runned sequentially)
 
+`--ignore-errors` Ignore errors, exit code will be always 0 (**optional**, default: fail on first error with exit code 1)
+
 ## Examples
 
-Execute `npm install` inside all NodeJS projects directories:
+Execute `npm install` inside all NodeJS projects directories in parallel:
 ```
 recursive-command --find-file='package-lock.json' --parallel npm install
 ```
 
-Execute `yarn install` inside all submodules (directory `./modules`) that use `yarn`:
+Execute `yarn install` inside all sub-modules (directory `./modules`) that use `yarn`:
 ```
 recursive-command --find-file='yarn.lock' --find-in-directory='./modules' --parallel yarn install
 ```
@@ -34,4 +36,9 @@ recursive-command --find-file='yarn.lock' --find-in-directory='./modules' --para
 Execute `serverless deploy` inside all Serverless Framework projects directories sequentially:
 ```
 recursive-command --find-file='serverless.yml' serverless deploy
+```
+
+Execute `npm audit` inside all NodeJS projects directories, ignoring errors:
+```
+recursive-command --find-file='package-lock.json' --parallel --ignore-errors npm audit 
 ```
